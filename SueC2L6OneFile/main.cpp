@@ -1113,8 +1113,9 @@ public:
     void listPeopleInState(string stateAbrev){
         
         State* newState = new State(stateAbrev);
-        State* state = this->states->find(newState)->getData();
-        if(state){
+        TreeNode<State> * stateNode = this->states->find(newState);
+        if(stateNode){
+            State* state = stateNode->getData();
             cout << "State: " << state->getState() << " # of people: " <<  state->getPeople()->getSize() << endl;
             state->getPeople()->print();
             
@@ -1163,8 +1164,9 @@ public:
     
     void findOldest(string stateAbrev){
         State* newState = new State(stateAbrev);
-        State* stateObject = this->states->find(newState)->getData();
-        if(stateObject){
+        TreeNode<State> * stateNode = this->states->find(newState);
+        if(stateNode){
+            State* stateObject = stateNode->getData();
             TreeNode<Person>*personNode = stateObject->getPeople()->getRoot();
             
             Person* oldest = findOldestRec(personNode);
@@ -1198,8 +1200,9 @@ public:
     
     void findYoungest(string stateAbrev){
         State* newState = new State(stateAbrev);
-        State* stateObject = this->states->find(newState)->getData();
-        if(stateObject){
+        TreeNode<State> * stateNode = this->states->find(newState);
+        if(stateNode){
+            State* stateObject = stateNode->getData();
             TreeNode<Person>*personNode = stateObject->getPeople()->getRoot();
             
             Person* youngest = findYoungestRec(personNode);
@@ -1763,7 +1766,6 @@ void commandLineInterpreter(){
                     
                 case ERROR:
                     cout<< "Error: Illegal Syntax in command" << endl;
-                    
                     
                 default:
                     cout<< "Error: Illegal Syntax in command" << endl;
