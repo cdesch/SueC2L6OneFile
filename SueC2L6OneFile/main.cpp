@@ -11,6 +11,9 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <stdio.h>
+#include <stdlib.h>
+
 using namespace std;
 
 enum COMMAND { EXIT_PROGRAM, READ, STATES, LIST, OLDEST, YOUNGEST, FIND, MOVE, MERGE, ERROR};
@@ -20,13 +23,6 @@ extern const string NULL_OBJECT = "NULLOBJECTSTRING";
 string months[] = {"January", "February", "March", "April","May","June","July", "August", "September", "October", "November","December"};
 
 
-//This function converts a string to an integer
-//It returns a variable of type int
-int converStringToInt(string myString){
-    //atoi() isn't something you would normally know about it
-    //Documentation link http://www.cplusplus.com/reference/cstdlib/atoi/
-    return atoi(myString.c_str());
-}
 //This function converts a string to an long
 //It returns a variable of type long
 //This function assumes that the string being converted is NOT a zero!!
@@ -1023,24 +1019,23 @@ protected:
     
 public:
     
-    int numberOfRecordsCounted = 0;
+    int numberOfRecordsCounted;
     TreeDatabase(){
+        this->numberOfRecordsCounted = 0;
         this->people = new Tree<Person>();
         this->states = new Tree<State>();
         this->states->setEnforceUniqueItems(true);
     }
     
     ~TreeDatabase(){
-        
         delete this->people;
         delete this->states;
-        
     }
     
     void readfile(string filename){
         this->numberOfRecordsCounted = 1;
         
-        ifstream infile(filename); //Open the file
+        ifstream infile(filename.c_str()); //Open the file
         string str; // Declares a string and is used for temporary storage
         if (infile.is_open()){
             while (getline(infile,str)){
